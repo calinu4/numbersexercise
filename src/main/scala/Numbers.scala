@@ -1,9 +1,8 @@
 
-
 class Numbers {
 
   import scala.math.pow
-
+  val thousand=1000
   val million = pow(10, 6)
   val billion = pow(10, 9)
   val trillion = pow(10, 12)
@@ -12,9 +11,11 @@ class Numbers {
   val sextillion = pow(10, 21)
 
 
-  def shortScale(x: Double): String = {
+
+  def shortScale(x: Long): String = {
     x match {
-      case x if (x < million) => (x / 1000).toInt.toString + " thousands and " + (x % 1000).toInt.toString
+      case x if(x<thousand)=>x.toInt.toString
+      case x if (x < million) => (x / thousand).toInt.toString + " thousands and " +shortScale((x%thousand).toLong)
       case x if (x < billion) => (x / million).toInt.toString + " million, " + shortScale((x % million).toLong)
       case x if (x < trillion) => (x / billion).toInt.toString + " billion, " + shortScale((x % billion).toLong)
       case x if (x < quadrillion) => (x / trillion).toInt.toString + " trillion, " + shortScale((x % trillion).toLong)
@@ -24,9 +25,10 @@ class Numbers {
     }
   }
 
-  def largeScale(x: Double): String = {
+  def largeScale(x: Long): String = {
     x match {
-      case x if (x < million) => (x / 1000).toInt.toString + " thousands and " + (x % 1000).toInt.toString
+      case x if(x<thousand)=>x.toInt.toString
+      case x if (x < million) => (x / 1000).toInt.toString + " thousands and " + shortScale(x%thousand)
       case x if (x < billion) => (x / million).toInt.toString + " million, " + largeScale((x % million).toLong)
       case x if (x < trillion) => (x / billion).toInt.toString + " milliard, " + largeScale((x % billion).toLong)
       case x if (x < quadrillion) => (x / trillion).toInt.toString + " billion, " + largeScale((x % trillion).toLong)
@@ -36,5 +38,6 @@ class Numbers {
     }
 
   }
+
 
 }
